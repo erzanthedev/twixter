@@ -3,11 +3,15 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 // Utitlty Function
 const checkLocalStorage = () => {
-  let storedData = JSON.parse(localStorage.getItem("twixs"));
+  const storedData = JSON.parse(localStorage.getItem("twixs"));
   if (storedData) {
     twixsData.length = 0; // Clear original Array
     twixsData.push(...storedData);
   }
+};
+
+const updateLocalStorage = () => {
+  localStorage.setItem("twixs", JSON.stringify(twixsData));
 };
 
 // Utitlty Function
@@ -95,7 +99,7 @@ const handleTwixClick = () => {
       uuid: uuidv4(),
     });
     twixInput.value = "";
-    localStorage.setItem("twixs", JSON.stringify(twixsData));
+    updateLocalStorage();
     render();
   }
 };
@@ -107,9 +111,9 @@ const handleLikeClick = (twixId) => {
   })[0];
 
   twixTargetObj.isLiked ? twixTargetObj.likes-- : twixTargetObj.likes++;
-
   twixTargetObj.isLiked = !twixTargetObj.isLiked;
 
+  updateLocalStorage();
   render();
 };
 
@@ -125,6 +129,7 @@ const handleRetweetClick = (twixId) => {
 
   twixTargetObj.isRetweeted = !twixTargetObj.isRetweeted;
 
+  updateLocalStorage();
   render();
 };
 

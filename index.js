@@ -36,8 +36,16 @@ const getReplyHtml = (repliesArr) => {
 const getFeedHtml = () => {
   return twixsData
     .map((twix) => {
-      const { profilePic, handle, twixText, replies, likes, retweets, uuid } =
-        twix;
+      const {
+        profilePic,
+        handle,
+        twixText,
+        replies,
+        likes,
+        retweets,
+        uuid,
+        isReplyOpen,
+      } = twix;
 
       const likedIconClass = twix.isLiked ? "liked" : "";
       const retweetedIconClass = twix.isRetweeted ? "retweeted" : "";
@@ -66,7 +74,7 @@ const getFeedHtml = () => {
             </div>
           </div>
         </div>
-        <div id='replies-${uuid}' class='hidden'>
+        <div id='replies-${uuid}' class=${isReplyOpen ? "" : "hidden"}>
           ${repliesHtml}
           <div class='reply-input-area'>
             <textarea id='reply-input-${uuid}' class='reply-input' placeholder="Add a comment...."></textarea>
@@ -98,6 +106,7 @@ const handleTwixClick = () => {
       replies: [],
       isLiked: false,
       isRetweeted: false,
+      isReplyOpen: false,
       uuid: uuidv4(),
     });
     twixInput.value = "";
@@ -148,12 +157,13 @@ const handleReplyBtnClick = (twixId) => {
   })[0];
 
   if (replyInput.value) {
-    twixTargetObj.replies.unshift({
+    twixTargetObj.replies.push({
       handle: `@erzanthedev 👨‍💻`,
       profilePic: `images/scrimbalogo.png`,
       twixText: `${replyInput.value}`,
     });
 
+    twixTargetObj.isReplyOpen = !twixTargetObj.isReplyOpen;
     updateLocalStorage();
     render();
   }

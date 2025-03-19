@@ -66,7 +66,7 @@ const getFeedHtml = () => {
             </div>
           </div>
         </div>
-        <div id='replies-${uuid}' class=''>
+        <div id='replies-${uuid}' class='hidden'>
           ${repliesHtml}
           <div class='reply-input-area'>
             <textarea class='reply-input' placeholder="Add a comment...."></textarea>

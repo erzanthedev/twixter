@@ -69,8 +69,8 @@ const getFeedHtml = () => {
         <div id='replies-${uuid}' class='hidden'>
           ${repliesHtml}
           <div class='reply-input-area'>
-            <textarea class='reply-input' placeholder="Add a comment...."></textarea>
-            <button class='reply-btn'>Reply</button>
+            <textarea id='reply-input-${uuid}' class='reply-input' placeholder="Add a comment...."></textarea>
+            <button class='reply-btn' data-reply-btn=${uuid}>Reply</button>
           </div>
         </div>
       </div>
@@ -139,6 +139,25 @@ const handleReplyClick = (twixId) => {
   document.getElementById(`replies-${twixId}`).classList.toggle("hidden");
 };
 
+const handleReplyBtnClick = (twixId) => {
+  const replyInput = document.getElementById(`reply-input-${twixId}`);
+
+  const twixTargetObj = twixsData.filter((twix) => {
+    return twix.uuid === twixId;
+  })[0];
+
+  if (replyInput.value) {
+    twixTargetObj.replies.unshift({
+      handle: `@erzanthedev 👨‍💻`,
+      profilePic: `images/scrimbalogo.png`,
+      twixText: `${replyInput.value}`,
+    });
+
+    updateLocalStorage();
+    render();
+  }
+};
+
 // Event Listeners
 document.addEventListener("click", (e) => {
   if (e.target.id === "twix-btn") {
@@ -149,6 +168,8 @@ document.addEventListener("click", (e) => {
     handleRetweetClick(e.target.dataset.retweet);
   } else if (e.target.dataset.reply) {
     handleReplyClick(e.target.dataset.reply);
+  } else if (e.target.dataset.replyBtn) {
+    handleReplyBtnClick(e.target.dataset.replyBtn);
   }
 });
 

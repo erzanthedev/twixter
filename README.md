@@ -68,7 +68,7 @@ This project was a great opportunity to test and apply the following **JavaScrip
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/twixter.git
+   git clone https://github.com/erzanthedev/twixter.git
    ```
 2. **Open `index.html` in your browser** and start Twixing! 🐦
 
@@ -76,7 +76,8 @@ This project was a great opportunity to test and apply the following **JavaScrip
 
 ## 📸 Project Preview
 
-_(Insert a screenshot or link to the live project here!)_
+<img width="449" alt="image" src="https://github.com/user-attachments/assets/bd1aef0d-245f-4e03-8404-e14026c6c77f" />
+
 
 ---
 

@@ -1,7 +1,7 @@
 import twixsData from "./data.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
-// Utitlty Function
+// Utitlty Functions
 const checkLocalStorage = () => {
   const storedData = JSON.parse(localStorage.getItem("twixs"));
   if (storedData) {
@@ -14,7 +14,6 @@ const updateLocalStorage = () => {
   localStorage.setItem("twixs", JSON.stringify(twixsData));
 };
 
-// Utitlty Function
 const getReplyHtml = (repliesArr) => {
   return repliesArr
     .map((reply) => {
@@ -34,7 +33,6 @@ const getReplyHtml = (repliesArr) => {
     .join("");
 };
 
-// Utitlty Function
 const getFeedHtml = () => {
   return twixsData
     .map((twix) => {
@@ -68,8 +66,12 @@ const getFeedHtml = () => {
             </div>
           </div>
         </div>
-        <div id='replies-${uuid}' class='hidden'>
+        <div id='replies-${uuid}' class=''>
           ${repliesHtml}
+          <div class='reply-input-area'>
+            <textarea class='reply-input' placeholder="Add a comment...."></textarea>
+            <button class='reply-btn'>Reply</button>
+          </div>
         </div>
       </div>
 `;

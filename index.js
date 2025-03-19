@@ -71,10 +71,14 @@ const getFeedHtml = () => {
                 <i class='fa-solid fa-retweet ${retweetedIconClass} ' data-retweet=${uuid}></i>
                 ${retweets}
               </span>
+              <span class='tweet-detail'>
+                <i class='fa-solid fa-trash-can ' data-delete=${uuid}></i>
+              </span>
+
             </div>
           </div>
         </div>
-        <div id='replies-${uuid}' class=${isReplyOpen ? "" : "hidden"}>
+        <div class=${isReplyOpen ? "" : "hidden"}>
           ${repliesHtml}
           <div class='reply-input-area'>
             <textarea id='reply-input-${uuid}' class='reply-input' placeholder="Add a comment...."></textarea>
@@ -116,10 +120,7 @@ const handleTwixClick = () => {
 };
 
 const handleLikeClick = (twixId) => {
-  const twixTargetObj = twixsData.filter((twix) => {
-    const { uuid } = twix;
-    return uuid === twixId;
-  })[0];
+  const twixTargetObj = twixsData.filter((twix) => twix.uuid === twixId)[0];
 
   twixTargetObj.isLiked ? twixTargetObj.likes-- : twixTargetObj.likes++;
   twixTargetObj.isLiked = !twixTargetObj.isLiked;
@@ -129,10 +130,7 @@ const handleLikeClick = (twixId) => {
 };
 
 const handleRetweetClick = (twixId) => {
-  const twixTargetObj = twixsData.filter((twix) => {
-    const { uuid } = twix;
-    return uuid === twixId;
-  })[0];
+  const twixTargetObj = twixsData.filter((twix) => twix.uuid === twixId)[0];
 
   twixTargetObj.isRetweeted
     ? twixTargetObj.retweets--
@@ -145,16 +143,15 @@ const handleRetweetClick = (twixId) => {
 };
 
 const handleReplyClick = (twixId) => {
-  document.getElementById(`replies-${twixId}`).classList.toggle("hidden");
+  const twixTargetObj = twixsData.filter((twix) => twix.uuid === twixId)[0];
+  twixTargetObj.isReplyOpen = !twixTargetObj.isReplyOpen;
+  updateLocalStorage();
+  render();
 };
 
 const handleReplyBtnClick = (twixId) => {
   const replyInput = document.getElementById(`reply-input-${twixId}`);
-
-  const twixTargetObj = twixsData.filter((twix) => {
-    const { uuid } = twix;
-    return uuid === twixId;
-  })[0];
+  const twixTargetObj = twixsData.filter((twix) => twix.uuid === twixId)[0];
 
   if (replyInput.value) {
     twixTargetObj.replies.push({
@@ -163,7 +160,6 @@ const handleReplyBtnClick = (twixId) => {
       twixText: `${replyInput.value}`,
     });
 
-    twixTargetObj.isReplyOpen = !twixTargetObj.isReplyOpen;
     updateLocalStorage();
     render();
   }

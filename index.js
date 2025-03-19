@@ -143,7 +143,8 @@ const handleReplyBtnClick = (twixId) => {
   const replyInput = document.getElementById(`reply-input-${twixId}`);
 
   const twixTargetObj = twixsData.filter((twix) => {
-    return twix.uuid === twixId;
+    const { uuid } = twix;
+    return uuid === twixId;
   })[0];
 
   if (replyInput.value) {

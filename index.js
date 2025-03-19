@@ -165,6 +165,13 @@ const handleReplyBtnClick = (twixId) => {
   }
 };
 
+const handleDeleteClick = (twixId) => {
+  const filteredTwixs = twixsData.filter((twix) => twix.uuid !== twixId);
+  twixsData.length = 0;
+  twixsData.push(...filteredTwixs);
+  updateLocalStorage();
+  render();
+};
 // Event Listeners
 document.addEventListener("click", (e) => {
   if (e.target.id === "twix-btn") {
@@ -177,6 +184,8 @@ document.addEventListener("click", (e) => {
     handleReplyClick(e.target.dataset.reply);
   } else if (e.target.dataset.replyBtn) {
     handleReplyBtnClick(e.target.dataset.replyBtn);
+  } else if (e.target.dataset.delete) {
+    handleDeleteClick(e.target.dataset.delete);
   }
 });
 
